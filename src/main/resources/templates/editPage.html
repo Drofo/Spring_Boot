@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${#strings.isEmpty(user.name) ? 'Add' : 'Edit'}"></title>
+</head>
+<body>
+
+<form th:action="@{${#strings.isEmpty(user.name) ? '/add' : '/edit'}}" method="POST" onsubmit="return validateForm()">
+
+    <input type="hidden" th:if="${not #strings.isEmpty(user.name)}" th:value="${user.id}" name="id">
+
+    <label for="name">Name</label>
+    <input type="text" th:value="${user.name}" name="name" id="name" required>
+
+    <label for="year">Year</label>
+    <input type="number" th:value="${user.year}" name="year" id="year" required>
+
+    <label for="gender">Gender</label>
+    <input type="text" th:value="${user.gender}" name="gender" id="gender" required>
+
+    <label for="online">Online</label>
+    <input type="checkbox" th:checked="${user.online}" name="online" id="online">
+
+    <input type="submit" th:value="${#strings.isEmpty(user.name) ? 'Add new user' : 'Edit user'}">
+
+</form>
+
+<script>
+    function validateForm() {
+        const name = document.getElementById('name').value.trim();
+        const year = document.getElementById('year').value.trim();
+        const gender = document.getElementById('gender').value.trim();
+        const online = document.getElementById('online').checked;
+
+        let errors = [];
+
+        if (!name) errors.push('Name is required.');
+        if (!year) errors.push('Year is required.');
+        if (!gender) errors.push('Gender is required.');
+
+        if (typeof online !== "boolean") {
+            errors.push("Online must be a boolean (true/false).");
+        }
+
+        if (errors.length > 0) {
+            alert(errors.join('\n'));
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>
