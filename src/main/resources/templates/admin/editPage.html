@@ -7,9 +7,17 @@
 </head>
 <body>
 
-<form th:action="@{${#strings.isEmpty(user.name) ? '/add' : '/edit'}}" method="POST" onsubmit="return validateForm()">
+<a href="/logout" th:href="@{/logout}" class="btn btn-danger">Logout</a>
 
-    <input type="hidden" th:if="${not #strings.isEmpty(user.name)}" th:value="${user.id}" name="id">
+<form th:action="@{${#strings.isEmpty(user.id) ? '/admin/add' : '/admin/edit'}}" method="POST" onsubmit="return validateForm()">
+
+    <input type="hidden" th:if="${user.id != null}" th:value="${user.id}" name="id">
+
+    <label for="username">Username</label>
+    <input type="text" th:value="${user.username}" name="username" id="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" th:required="${user.id == null}">
 
     <label for="name">Name</label>
     <input type="text" th:value="${user.name}" name="name" id="name" required>
@@ -23,7 +31,7 @@
     <label for="online">Online</label>
     <input type="checkbox" th:checked="${user.online}" name="online" id="online">
 
-    <input type="submit" th:value="${#strings.isEmpty(user.name) ? 'Add new user' : 'Edit user'}">
+    <input type="submit" th:value="${#strings.isEmpty(user.id) ? 'Add new user' : 'Edit user'}">
 
 </form>
 
