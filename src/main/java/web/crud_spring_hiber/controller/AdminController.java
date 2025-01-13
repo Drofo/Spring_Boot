@@ -16,14 +16,14 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
+    private final PasswordEncoder passwordEncoder;
     private final UserServiceImpl userService;
     private final RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserServiceImpl userService, RoleServiceImpl roleService) {
+    public AdminController(PasswordEncoder passwordEncoder, UserServiceImpl userService, RoleServiceImpl roleService) {
+        this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.roleService = roleService;
     }

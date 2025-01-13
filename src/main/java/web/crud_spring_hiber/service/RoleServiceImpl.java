@@ -7,7 +7,7 @@ import web.crud_spring_hiber.dao.RoleRepository;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl {
+public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
@@ -15,10 +15,12 @@ public class RoleServiceImpl {
         this.roleRepository = roleRepository;
     }
 
+    @Override
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
+    @Override
     public List<Role> getRolesByIds(List<Long> roleIds) {
         return roleRepository.findAllById(roleIds);
     }
